@@ -28,7 +28,7 @@ class _MechanismState extends State<Mechanism> {
                     : Text("Sorry, something went wrong :/"));
   }
 
-  void changeStage(amount, stage) async {
+  void changeStage(int amount, int stage) async {
     setState(() {
       this.balance = amount;
       this.stage = stage;
