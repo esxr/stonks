@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:stonks/money.dart';
 
 class Confirmation extends StatefulWidget {
-  final Function(int, int) changeStage;
   final int balance;
-  Confirmation({this.changeStage, this.balance});
+  final Function(int) changeStage;
+
+  Confirmation({this.balance, this.changeStage});
 
   @override
   _ConfirmationState createState() => _ConfirmationState();
 }
 
 class _ConfirmationState extends State<Confirmation> {
-  
-  static String _text;
-  TextEditingController _controller = TextEditingController(text: _text);
+  TextEditingController _controller = TextEditingController();
 
   void initState() {
     _controller.value = TextEditingValue(text: widget.balance.toString());
@@ -32,8 +32,6 @@ class _ConfirmationState extends State<Confirmation> {
 
   @override
   Widget build(BuildContext context) {
-    _text = widget.balance.toString();
-
     return Container(
       child: Card(
         elevation: 2,
@@ -48,7 +46,8 @@ class _ConfirmationState extends State<Confirmation> {
             FlatButton(
                 child: Text("Ok"),
                 onPressed: () {
-                  widget.changeStage(int.parse(_controller.text.toString()), 1);
+                  spendAmount(_controller.value.toString());
+                  widget.changeStage(0);
                 })
           ],
         ),

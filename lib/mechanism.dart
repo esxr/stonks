@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stonks/components/button.dart';
 import 'package:stonks/components/confirmation.dart';
-import 'package:stonks/components/slider.dart';
+import 'package:stonks/components/buttonSlider.dart';
 import 'package:stonks/money.dart';
 
 class Mechanism extends StatefulWidget {
@@ -10,32 +10,36 @@ class Mechanism extends StatefulWidget {
 }
 
 class _MechanismState extends State<Mechanism> {
-  int stage = 1;
+  int stage = 0;
   int balance = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: (stage == 0)
-            ? Button()
+            ? ButtonSlider(
+                balance: balance,
+                changeBalance: changeBalance,
+                changeStage: changeStage)
             : (stage == 1)
-                ? MoneySlider(changeStage: changeStage)
-                : (stage == 2)
-                    ? Confirmation(
-                        changeStage: changeStage,
-                        balance: this.balance,
-                      )
-                    : Text("Sorry, something went wrong :/"));
+                ? Confirmation(
+                    balance: balance,
+                    changeStage: changeStage)
+                : Text("Sorry, something went wrong :/"));
   }
 
-  void changeStage(int amount, int stage) async {
+  void changeBalance(int balance) {
+    this.balance = balance;
+  }
+
+  void changeStage(int stage) async {
     setState(() {
-      this.balance = amount;
       this.stage = stage;
     });
 
-    if(stage==2) { spendAmount(amount.toString()); } // spend the amount after confirmation
-    String balance = await getBalance();
-    print("Balance: " + balance);
+    // DEBUG
+    String _balance = await getBalance();
+    print("Balance: " + _balance);
+    // END DEBUG
   }
 }

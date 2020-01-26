@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stonks/components/slider.dart';
+import 'package:stonks/components/buttonSlider.dart';
 import 'package:stonks/mechanism.dart';
 import 'package:stonks/money.dart';
 import 'components/button.dart';

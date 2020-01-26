@@ -1,33 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:stonks/components/confirmation.dart';
+import 'package:stonks/components/slider.dart';
+import 'package:stonks/money.dart';
 
 class Button extends StatefulWidget {
+  final Function(int, int) changeStage;
+
+  Button({this.changeStage});
+
   @override
   _ButtonState createState() => _ButtonState();
 }
 
 class _ButtonState extends State<Button> {
-  int _counter = 0;
+  int balance = 0;
+  int stage = 0;
 
-  bool _buttonPressed = false;
-  bool _loopActive = false;
+  void _deductBalance() {}
 
-  void _increaseCounterWhilePressed() async {
-    // make sure that only one loop is active
-    if (_loopActive) return;
+  void changeBalance(int balance) {
+    this.balance = balance;
+  }
 
-    _loopActive = true;
-
-    while (_buttonPressed) {
-      // do your thing
-      setState(() {
-        _counter++;
-      });
-
-      // wait a bit
-      await Future.delayed(Duration(milliseconds: 200));
-    }
-
-    _loopActive = false;
+  void changeStage(int stage) {
+    this.stage = stage;
   }
 
   @override
@@ -35,22 +31,11 @@ class _ButtonState extends State<Button> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Listener(
-          onPointerDown: (details) {
-            _buttonPressed = true;
-            _increaseCounterWhilePressed();
-          },
-          onPointerUp: (details) {
-            _buttonPressed = false;
-          },
-          child: Container(
-            decoration:
-                BoxDecoration(color: Colors.orange, border: Border.all()),
-            padding: EdgeInsets.all(16.0),
-            child: Text('Value: $_counter'),
-          ),
-        ),
-      ),
+          child: (stage == 1)
+              ? FlatButton(
+                  padding: EdgeInsets.all(16.0),
+                )
+              : Text("something went wrong :/")),
     );
   }
 }
