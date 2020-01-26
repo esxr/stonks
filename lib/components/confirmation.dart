@@ -33,23 +33,25 @@ class _ConfirmationState extends State<Confirmation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Card(
-        elevation: 2,
-        child: Column(
-          children: <Widget>[
-            TextField(
-              controller: _controller,
-            ),
-            TextField(
-              controller: TextEditingController(text: "What's this for?"),
-            ),
-            FlatButton(
-                child: Text("Ok"),
-                onPressed: () {
-                  spendAmount(double.parse(_controller.text.toString()));
-                  widget.changeStage(0);
-                })
-          ],
+      child: Center(
+        child: Card(
+          elevation: 2,
+          child: Column(
+            children: <Widget>[
+              TextField(
+                controller: _controller,
+              ),
+              TextField(
+                controller: TextEditingController(text: "What's this for?"),
+              ),
+              FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    spendAmount(double.parse(_controller.text.toString()));
+                    widget.changeStage(0);
+                  })
+            ],
+          ),
         ),
       ),
     );

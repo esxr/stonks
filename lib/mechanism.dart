@@ -15,17 +15,17 @@ class _MechanismState extends State<Mechanism> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: (stage == 0)
-            ? ButtonSlider(
-                balance: balance,
-                changeBalance: changeBalance,
-                changeStage: changeStage)
-            : (stage == 1)
-                ? Confirmation(
-                    balance: balance,
-                    changeStage: changeStage)
-                : Text("Sorry, something went wrong :/"));
+    return Center(
+      child: Container(
+          child: (stage == 0)
+              ? ButtonSlider(
+                  balance: balance,
+                  changeBalance: changeBalance,
+                  changeStage: changeStage)
+              : (stage == 1)
+                  ? Confirmation(balance: balance, changeStage: changeStage)
+                  : Text("Sorry, something went wrong :/")),
+    );
   }
 
   void changeBalance(int balance) {

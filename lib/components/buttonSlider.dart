@@ -13,49 +13,82 @@ class ButtonSlider extends StatefulWidget {
 
 class _ButtonSliderState extends State<ButtonSlider> {
   double _sliderValue;
-  bool pressed;
+  Widget button, slider;
+
+  double _buttonOpacity, _sliderOpacity;
 
   void initState() {
-    pressed = false;
-    _sliderValue = widget.balance.toDouble();
+    _buttonOpacity = 1;
+    _sliderOpacity = 0;
+    _sliderValue = 50;
     super.initState();
+  }
+
+  void setWidgets() {
+    // set the button
+    button = Opacity(
+      opacity: _buttonOpacity,
+      child: Center(
+        child: FlatButton(
+            color: Colors.black, textColor: Colors.white, child: Text("Spend")),
+      ),
+    );
+
+    // set the slider
+    slider = Opacity(
+      opacity: _sliderOpacity,
+      child: RotatedBox(
+        quarterTurns: 3,
+        child: Slider(
+          activeColor: Colors.indigoAccent,
+          min: 0.0,
+          max: 100,
+          divisions: 10,
+          onChangeEnd: (value) {
+            // change the balance accordingly
+            widget.changeBalance(value.round());
+          },
+          onChanged: (value) {
+            // change slider appearance
+            setState(() {
+              _sliderValue = value;
+            });
+          },
+          value: _sliderValue,
+        ),
+      ),
+    );
+  }
+
+  setStage(bool pressed) {
+    double op = 0;
+
+    if (pressed) {
+      op = 1;
+    }
+
+    setState(() {
+      _sliderOpacity = op;
+      _buttonOpacity = 1 - op;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    setWidgets();
+
     return Container(
         child: Listener(
             onPointerDown: (details) {
-              setState(() {
-                pressed = true;
-              });
+              setStage(true);
             },
             onPointerUp: (details) {
               // change balance and stage on release
               widget.changeBalance(_sliderValue.round());
               widget.changeStage(1);
             },
-            child: pressed
-                ? Slider(
-                    activeColor: Colors.indigoAccent,
-                    min: 0.0,
-                    max: 100,
-                    divisions: 10,
-                    onChangeEnd: (value) {
-                      // change the balance accordingly
-                      widget.changeBalance(value.round());
-                    },
-                    onChanged: (value) {
-                      // change slider appearance
-                      setState(() {
-                        _sliderValue = value;
-                      });
-                    },
-                    value: _sliderValue,
-                  )
-                : FlatButton(
-                    color: Colors.black,
-                    textColor: Colors.white,
-                    child: Text("Spend"))));
+            child: Stack(
+              children: <Widget>[button, slider],
+            )));
   }
 }
