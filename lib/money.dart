@@ -1,35 +1,35 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-addAmount(String amount) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  int newBalance = int.parse(await getBalance()) + int.parse(amount);
-  prefs.setString('money', newBalance.toString());
+addAmount(double amount) async {
+  double newBalance = await getBalance() + amount;
+  setBalance(newBalance);
 }
 
-spendAmount(String amount) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  int newBalance = int.parse(await getBalance()) - int.parse(amount);
+spendAmount(double amount) async {
+  double newBalance = await getBalance() - amount;
   if (newBalance >= 0) {
-    prefs.setString('money', newBalance.toString()); return;
+    setBalance(newBalance);
+    return;
   }
   print("Balance not enough!");
 }
 
-setBalance(String amount) async {
+// Double -> String
+setBalance(double amount) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString('money', amount);
+  prefs.setString('money', amount.toString());
 }
 
+// String -> Double
 getBalance() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  String money = prefs.getString('money');
+  double money = double.parse(prefs.getString('money'));
   return money;
 }
 
 removeBalance() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
   prefs.remove('money');
 }
 

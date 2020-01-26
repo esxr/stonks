@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stonks/money.dart';
 
 class Confirmation extends StatefulWidget {
-  final int balance;
+  final int balance;  // balance received from previous stage
   final Function(int) changeStage;
 
   Confirmation({this.balance, this.changeStage});
@@ -46,7 +46,7 @@ class _ConfirmationState extends State<Confirmation> {
             FlatButton(
                 child: Text("Ok"),
                 onPressed: () {
-                  spendAmount(_controller.value.toString());
+                  spendAmount(double.parse(_controller.text.toString()));
                   widget.changeStage(0);
                 })
           ],

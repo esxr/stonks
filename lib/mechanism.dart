@@ -38,8 +38,8 @@ class _MechanismState extends State<Mechanism> {
     });
 
     // DEBUG
-    String _balance = await getBalance();
-    print("Balance: " + _balance);
+    double _balance = await getBalance();
+    print("Balance: " + _balance.toString());
     // END DEBUG
   }
 }
