@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stonks/components/button.dart';
 import 'package:stonks/components/confirmation.dart';
 import 'package:stonks/components/buttonSlider.dart';
 import 'package:stonks/money.dart';
@@ -36,10 +35,5 @@ class _MechanismState extends State<Mechanism> {
     setState(() {
       this.stage = stage;
     });
-
-    // DEBUG
-    double _balance = await getBalance();
-    print("Balance: " + _balance.toString());
-    // END DEBUG
   }
 }

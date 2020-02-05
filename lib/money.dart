@@ -33,4 +33,5 @@ removeBalance() async {
   prefs.remove('money');
 }
 
+
 // TODO: add a function to upload transaction history to SERVER

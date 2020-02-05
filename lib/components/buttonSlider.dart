@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stonks/components/balanceView.dart';
 
 class ButtonSlider extends StatefulWidget {
   final int balance;

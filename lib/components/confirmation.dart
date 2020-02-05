@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stonks/money.dart';
 
 class Confirmation extends StatefulWidget {
-  final int balance;  // balance received from previous stage
+  final int balance; // balance received from previous stage
   final Function(int) changeStage;
 
   Confirmation({this.balance, this.changeStage});
@@ -14,8 +14,17 @@ class Confirmation extends StatefulWidget {
 class _ConfirmationState extends State<Confirmation> {
   TextEditingController _controller = TextEditingController();
 
+  String _controllerValue;
+
+  void debugBalance() async {
+    // DEBUG
+    double _balance = await getBalance();
+    print("Balance: " + _balance.toString());
+    // END DEBUG
+  }
+
   void initState() {
-    _controller.value = TextEditingValue(text: widget.balance.toString());
+    _controllerValue = widget.balance.toString();
 
     // controller state management
     _controller.addListener(() {
@@ -26,6 +35,7 @@ class _ConfirmationState extends State<Confirmation> {
             TextSelection(baseOffset: text.length, extentOffset: text.length),
         composing: TextRange.empty,
       );
+      _controllerValue = _controller.text.toString();
     });
     super.initState();
   }
@@ -39,15 +49,20 @@ class _ConfirmationState extends State<Confirmation> {
           child: Column(
             children: <Widget>[
               TextField(
-                controller: _controller,
-              ),
+                  controller: _controller,
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: _controllerValue)),
               TextField(
-                controller: TextEditingController(text: "What's this for?"),
-              ),
+                  controller: TextEditingController(),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "What's  this for ?")),
               FlatButton(
                   child: Text("Ok"),
                   onPressed: () {
-                    spendAmount(double.parse(_controller.text.toString()));
+                    spendAmount(double.parse(_controllerValue));
+                    debugBalance();
+                    print(_controllerValue.toString());
                     widget.changeStage(0);
                   })
             ],
