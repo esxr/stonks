@@ -15,6 +15,9 @@ class _ConfirmationState extends State<Confirmation> {
   TextEditingController _controller = TextEditingController();
 
   String _controllerValue;
+  double amount_fontsize = 64;
+  double reason_fontsize = 15;
+  double _radius = 10;
 
   void debugBalance() async {
     // DEBUG
@@ -42,32 +45,78 @@ class _ConfirmationState extends State<Confirmation> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Card(
-          elevation: 2,
-          child: Column(
-            children: <Widget>[
-              TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                      border: InputBorder.none, hintText: _controllerValue)),
-              TextField(
-                  controller: TextEditingController(),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "What's  this for ?")),
-              FlatButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    spendAmount(double.parse(_controllerValue));
-                    debugBalance();
-                    print(_controllerValue.toString());
-                    widget.changeStage(0);
-                  })
-            ],
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.40,
+            child: Card(
+              elevation: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: TextField(
+                        style: TextStyle(fontSize: amount_fontsize),
+                        controller: _controller,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(_radius),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.solid,
+                              ),
+                            ),
+                            hintText: _controllerValue)),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: TextField(
+                        style: TextStyle(fontSize: reason_fontsize),
+                        controller: TextEditingController(),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(_radius),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.solid,
+                              ),
+                            ),
+                            hintText: "What's  this for ?")),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      FlatButton(
+                        autofocus: true,
+                          child: Text("Ok"),
+                          onPressed: () {
+                            spendAmount(double.parse(_controllerValue));
+                            debugBalance();
+                            print(_controllerValue.toString());
+                            widget.changeStage(0);
+                          }),
+                      FlatButton(
+                          child: Text("Cancel"),
+                          onPressed: () {
+                            debugBalance();
+                            widget.changeStage(0);
+                          })
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      );
+        ]);
   }
 
   @override
