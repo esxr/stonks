@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stonks/components/balanceView.dart';
+import 'package:imagebutton/imagebutton.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ButtonSlider extends StatefulWidget {
   final int balance;
@@ -28,12 +30,17 @@ class _ButtonSliderState extends State<ButtonSlider> {
   void setWidgets() {
     // set the button
     button = Opacity(
-      opacity: _buttonOpacity,
-      child: Center(
-        child: FlatButton(
-            color: Colors.black, textColor: Colors.white, child: Text("Spend")),
-      ),
-    );
+        opacity: _buttonOpacity,
+        child: Center(
+          child: GestureDetector(
+            child: SvgPicture.asset(
+              "assets/images/dollar.svg",
+              placeholderBuilder: (context) => Icon(Icons.error),
+              height: 128.0,
+            ),
+            // child: Text("Spend")
+          ),
+        ));
 
     // set the slider
     slider = Opacity(

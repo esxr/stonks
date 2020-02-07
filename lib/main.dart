@@ -16,8 +16,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Scaffold(
-          body: Container(
-              child: HomePage()
+          body: SingleChildScrollView(
+                      child: Container(
+                child: HomePage()
+            ),
           )),
         );
   }

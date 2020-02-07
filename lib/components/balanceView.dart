@@ -10,6 +10,7 @@ class _BalanceViewState extends State<BalanceView> {
   TextEditingController _controller = TextEditingController();
   String _controllerValue;
   Widget _textField;
+  double _fontsize = 32;
 
   void updateBalanceValue() async {
     double balance = await getBalance();
@@ -19,8 +20,6 @@ class _BalanceViewState extends State<BalanceView> {
   }
 
   void initState() {
-    // _controllerValue = getBalance().toString();
-
     // controller state management
     _controller.addListener(() {
       final text = _controller.text.toLowerCase();
@@ -36,39 +35,45 @@ class _BalanceViewState extends State<BalanceView> {
 
   void setWidgets() {
     _textField = TextField(
-                textInputAction: TextInputAction.done,
-                onSubmitted: (value) {
-                  setBalance(double.parse(_controller.text.toString()));
-                  _controller.clear();
-                  setState(() {
-                    updateBalanceValue();
-                  });
-                },
-                keyboardType: TextInputType.number,
-                controller: _controller,
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: _controllerValue),
-                onChanged: (v) => setState(() {
-                  _controllerValue = v;
-                }),
-              );
+      style: TextStyle(fontSize: _fontsize),
+      textInputAction: TextInputAction.done,
+      onSubmitted: (value) {
+        setBalance(double.parse(_controller.text.toString()));
+        _controller.clear();
+        setState(() {
+          updateBalanceValue();
+        });
+      },
+      keyboardType: TextInputType.number,
+      controller: _controller,
+      decoration: InputDecoration(
+          hintStyle: TextStyle(fontSize: _fontsize),
+          border: InputBorder.none,
+          hintText: _controllerValue),
+      onChanged: (v) => setState(() {
+        _controllerValue = v;
+      }),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
     setWidgets();
     updateBalanceValue();
 
     return Container(
+      // color: Color(0xFEA832),
+      color: Colors.amber,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
-              width: 100,
-              child: _textField
-            ),
+            ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 100,
+                  // minWidth: 100
+                ),
+                child: _textField),
           ]),
     );
   }

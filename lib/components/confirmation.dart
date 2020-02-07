@@ -42,8 +42,7 @@ class _ConfirmationState extends State<Confirmation> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
+    return Center(
         child: Card(
           elevation: 2,
           child: Column(
@@ -68,8 +67,7 @@ class _ConfirmationState extends State<Confirmation> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   @override
