@@ -26,6 +26,24 @@ class _ConfirmationState extends State<Confirmation> {
     // END DEBUG
   }
 
+  void deductBalance() async {
+    try {
+      spendAmount(double.parse(_controllerValue));
+      widget.changeStage(0);
+    } catch (e) {
+      // display a toast telling the user  to enter the  balance
+      Scaffold.of(context).showSnackBar(new SnackBar(
+        content: new Text("Please enter an amount!"),
+        duration: Duration(seconds: 1),
+      ));
+    }
+
+    // DEBUG
+    debugBalance();
+    print(_controllerValue.toString());
+    // END DEBUG
+  }
+
   void initState() {
     _controllerValue = widget.balance.toString();
 
@@ -59,9 +77,22 @@ class _ConfirmationState extends State<Confirmation> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
+                  // Amount
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: TextField(
+                        // remove hint text (preselected text)  on  tap
+                        onTap: () {
+                          setState(() {
+                            _controllerValue = "";
+                          });
+                        },
+                        onSubmitted: (value) {
+                          deductBalance();
+                        },
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
                         style: TextStyle(fontSize: amount_fontsize),
                         controller: _controller,
                         decoration: InputDecoration(
@@ -75,9 +106,12 @@ class _ConfirmationState extends State<Confirmation> {
                             hintText: _controllerValue)),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+                  // Reason
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: TextField(
+                        textAlign: TextAlign.center,
                         style: TextStyle(fontSize: reason_fontsize),
                         controller: TextEditingController(),
                         decoration: InputDecoration(
@@ -88,7 +122,7 @@ class _ConfirmationState extends State<Confirmation> {
                                 style: BorderStyle.solid,
                               ),
                             ),
-                            hintText: "What's  this for ?")),
+                            labelText: "What's this for ?")),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   Row(
@@ -96,13 +130,10 @@ class _ConfirmationState extends State<Confirmation> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       FlatButton(
-                        autofocus: true,
+                          autofocus: true,
                           child: Text("Ok"),
                           onPressed: () {
-                            spendAmount(double.parse(_controllerValue));
-                            debugBalance();
-                            print(_controllerValue.toString());
-                            widget.changeStage(0);
+                            deductBalance();
                           }),
                       FlatButton(
                           child: Text("Cancel"),
