@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stonks/components/balanceView.dart';
-import 'package:imagebutton/imagebutton.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ButtonSlider extends StatefulWidget {
@@ -27,6 +26,21 @@ class _ButtonSliderState extends State<ButtonSlider> {
     super.initState();
   }
 
+  // Define Slider Properties
+  double sliderMin = 0;
+  double sliderMax = 100;
+  int sliderDivisions = 10;
+
+  void sliderOnChangeEnd(value) {
+    widget.changeBalance(value.round());
+  }
+
+  void sliderOnChanged(value) {
+    setState(() {
+      _sliderValue = value;
+    });
+  }
+
   void setWidgets() {
     // set the button
     button = Opacity(
@@ -45,24 +59,34 @@ class _ButtonSliderState extends State<ButtonSlider> {
     // set the slider
     slider = Opacity(
       opacity: _sliderOpacity,
-      child: RotatedBox(
-        quarterTurns: 3,
-        child: Slider(
-          activeColor: Colors.indigoAccent,
-          min: 0.0,
-          max: 100,
-          divisions: 10,
-          onChangeEnd: (value) {
-            // change the balance accordingly
-            widget.changeBalance(value.round());
-          },
-          onChanged: (value) {
-            // change slider appearance
-            setState(() {
-              _sliderValue = value;
-            });
-          },
-          value: _sliderValue,
+      child: Container(
+        child: RotatedBox(
+          quarterTurns: 3,
+          child: SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              valueIndicatorColor: Color(0xFFFE9923),
+              inactiveTrackColor: Color(0xFFFEDB41),
+              activeTrackColor: Color(0xFFFFCC33),
+              trackHeight: 3.0,
+              thumbColor: Color(0xFFFE9923),
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+              overlayColor: Colors.purple.withAlpha(32),
+              overlayShape: RoundSliderOverlayShape(overlayRadius: 50.0),
+            ),
+            child: Slider(
+              label: _sliderValue.toString(),
+              min: sliderMin,
+              max: sliderMax,
+              divisions: sliderDivisions,
+              onChangeEnd: (value) {
+                sliderOnChangeEnd(value);
+              },
+              onChanged: (value) {
+                sliderOnChanged(value);
+              },
+              value: _sliderValue,
+            ),
+          ),
         ),
       ),
     );

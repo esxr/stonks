@@ -15,8 +15,8 @@ class _ConfirmationState extends State<Confirmation> {
   TextEditingController _controller = TextEditingController();
 
   String _controllerValue;
-  double amount_fontsize = 64;
-  double reason_fontsize = 15;
+  double amountFontSize = 64;
+  double reasonFontSize = 15;
   double _radius = 10;
 
   void debugBalance() async {
@@ -93,7 +93,7 @@ class _ConfirmationState extends State<Confirmation> {
                         },
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: amount_fontsize),
+                        style: TextStyle(fontSize: amountFontSize),
                         controller: _controller,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -112,7 +112,7 @@ class _ConfirmationState extends State<Confirmation> {
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: TextField(
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: reason_fontsize),
+                        style: TextStyle(fontSize: reasonFontSize),
                         controller: TextEditingController(),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(

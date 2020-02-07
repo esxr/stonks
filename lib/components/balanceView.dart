@@ -35,6 +35,7 @@ class _BalanceViewState extends State<BalanceView> {
 
   void setWidgets() {
     _textField = TextField(
+      textAlign: TextAlign.center,
       style: TextStyle(fontSize: _fontsize),
       textInputAction: TextInputAction.done,
       onSubmitted: (value) {
@@ -47,7 +48,8 @@ class _BalanceViewState extends State<BalanceView> {
       keyboardType: TextInputType.number,
       controller: _controller,
       decoration: InputDecoration(
-          hintStyle: TextStyle(fontSize: _fontsize),
+          hintStyle:
+              TextStyle(fontSize: _fontsize, fontWeight: FontWeight.w700),
           border: InputBorder.none,
           hintText: _controllerValue),
       onChanged: (v) => setState(() {
@@ -62,15 +64,14 @@ class _BalanceViewState extends State<BalanceView> {
     updateBalanceValue();
 
     return Container(
-      // color: Color(0xFEA832),
-      color: Colors.amber,
+      color: Color(0xFFFEA832),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth: 100,
+                  maxWidth: 200,
                   // minWidth: 100
                 ),
                 child: _textField),
